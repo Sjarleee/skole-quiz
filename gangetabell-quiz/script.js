@@ -1,3 +1,29 @@
+/**
+ * GANGETABELL QUIZ
+ * 
+ * En interaktiv quiz for å øve på gangetabellen.
+ * Støtter ulike vanskelighetsgrader (1-5, 1-10, 1-20) konfigurert via HTML.
+ * 
+ * FUNKSJONER:
+ * - Genererer tilfeldige gangestykker
+ * - 4 svaralternativer med intelligente distraktorer
+ * - Visuell representasjon for 1-5 tabellen
+ * - Personlige tilbakemeldinger
+ * - Poengsystem og resultatvisning
+ * 
+ * KONFIGURASJON:
+ * Sett data-max-table attributt på <body> tag i HTML:
+ * <body data-max-table="10"> for 1-10 tabellen
+ * 
+ * @author Skolequiz Prosjekt
+ * @version 1.0
+ * @date 2026-01-06
+ */
+
+// ============================================================================
+// DOM-ELEMENTER
+// ============================================================================
+
 const quizContainer = document.getElementById('quiz-container');
 const questionEl = document.getElementById('question');
 const optionsEl = document.getElementById('options');
@@ -6,15 +32,40 @@ const nextButton = document.getElementById('next-btn');
 const scoreEl = document.getElementById('score-container');
 const questionCounterEl = document.getElementById('question-counter');
 
-let allPossibleQuestions = [];
-let currentQuestions = [];
-let currentQuestionIndex = 0;
-let score = 0;
-const DEFAULT_NUM_QUESTIONS_TO_ASK = 20; // Standard antall spørsmål å forsøke å stille
-let NUM_QUESTIONS_TO_ASK = DEFAULT_NUM_QUESTIONS_TO_ASK; // Nåværende antall spørsmål for denne quizen
-let MAX_TABLE_NUMBER; // Vil bli satt i DOMContentLoaded
+// ============================================================================
+// QUIZ-TILSTAND
+// ============================================================================
 
-let correctFeedbackMessages = [ // 15 stk
+/** Alle mulige spørsmål basert på MAX_TABLE_NUMBER */
+let allPossibleQuestions = [];
+
+/** Spørsmålene som brukes i gjeldende quiz-runde */
+let currentQuestions = [];
+
+/** Indeks for nåværende spørsmål */
+let currentQuestionIndex = 0;
+
+/** Antall riktige svar */
+let score = 0;
+
+/** Standard antall spørsmål per quiz */
+const DEFAULT_NUM_QUESTIONS_TO_ASK = 20;
+
+/** Nåværende antall spørsmål for denne quizen */
+let NUM_QUESTIONS_TO_ASK = DEFAULT_NUM_QUESTIONS_TO_ASK;
+
+/** Maksimalt tall i gangetabellen (settes fra HTML) */
+let MAX_TABLE_NUMBER;
+
+// ============================================================================
+// TILBAKEMELDINGER
+// ============================================================================
+
+/**
+ * Positive tilbakemeldinger når svar er riktig.
+ * Personalisert for Othilie med referanser til hennes interesser.
+ */
+let correctFeedbackMessages = [
     "Yes! Helt konge, Othilie! Mamma og Pappa blir så stolte!",
     "Du er jo helt rå på dette, Othilie! High five fra Lilo & Stitch!",
     "Korrekt! Du er smartere enn en kalkulator, og like glitrende som din favoritt-makeup!",
@@ -55,7 +106,11 @@ const newCorrectFeedbackMessages = [
 ];
 correctFeedbackMessages = correctFeedbackMessages.concat(newCorrectFeedbackMessages);
 
-let incorrectFeedbackMessages = [ // 15 stk
+/**
+ * Negative tilbakemeldinger når svar er feil.
+ * Oppløftende tone som oppmuntrer til å fortsette.
+ */
+let incorrectFeedbackMessages = [
     "Oisann, Othilie! Den var litt vrien, hva? Kanskje Mamma eller Pappa kan hjelpe? Riktig svar var ",
     "Næææh, ikke helt, Othilie. Men neste gang, da sitter'n! Som en perfekt Sabrina Carpenter-sang! Riktig svar var ",
     "Ups! Selv Stitch gjør feil noen ganger, Othilie. Ikke gi deg! Riktig svar var ",
@@ -92,33 +147,29 @@ const newIncorrectFeedbackMessages = [
     "Anders rynker pannen, men har troen på deg! Riktig svar var ",
     "Oter'n, den glapp! Men du er snart tilbake på sporet. Riktig svar var ",
     "En falsk note der, men neste blir ren! Riktig svar var ",
+// ============================================================================
+// SPØRSMÅLSGENERERING
+// ============================================================================
+
+/**
+ * Genererer alle mulige gangetabell-spørsmål basert på MAX_TABLE_NUMBER.
+ * 
+ * For hvert spørsmål:
+ * - Lager et tekstspørsmål (med visuell representasjon for 1-5)
+ * - Genererer 4 svaralternativer (1 riktig + 3 distraktorer)
+ * - Distraktorer er intelligente (nære det riktige svaret)
+ */
     "Feil spor, detektiv! Men du finner løsningen snart. Riktig svar var "
-];
-incorrectFeedbackMessages = incorrectFeedbackMessages.concat(newIncorrectFeedbackMessages);
-
-function generateAllPossibleQuestions() {
-    allPossibleQuestions = [];
-    if (typeof MAX_TABLE_NUMBER === 'undefined') {
-        console.error("MAX_TABLE_NUMBER er ikke definert! Bruker 20 som standard.");
-        MAX_TABLE_NUMBER = 20;
-    }
-
-    for (let i = 1; i <= MAX_TABLE_NUMBER; i++) {
-        for (let j = 1; j <= MAX_TABLE_NUMBER; j++) {
-            const correctAnswer = i * j;
-            let questionText = `Hva er ${i} x ${j}?`;
-
-            // Legg til visuell representasjon for 1-5 tabellen
+];// Eksempel: 3 x 2 vises som "●●● x ●●"
             if (MAX_TABLE_NUMBER <= 5) {
                 const visual_i = '●'.repeat(i);
                 const visual_j = '●'.repeat(j);
                 questionText += `<br><span class="visual-math">${visual_i} x ${visual_j}</span>`;
             }
 
-            // Sikre at vi ikke har flere spørsmål enn unike kombinasjoner
-            
+            // Generer intelligente distraktorer (feil svar)
             let options = new Set();
-            options.add(correctAnswer);
+            options.add(correctAnswer); // Legg til riktig svar
 
             let attempts = 0;
             while (options.size < 4 && attempts < 50) {
@@ -126,34 +177,75 @@ function generateAllPossibleQuestions() {
                 let distractor;
                 const type = Math.random();
 
+                // 50% sjanse: Svar nært det riktige (+/- noen)
                 if (type < 0.5 || correctAnswer < 5) {
-                    const maxOffset = Math.max(3, Math.floor(correctAnswer * 0.3)) + (options.size * 2); // Vary offset slightly
+                    const maxOffset = Math.max(3, Math.floor(correctAnswer * 0.3)) + (options.size * 2);
                     const offset = (Math.floor(Math.random() * maxOffset) + 1) * (Math.random() < 0.5 ? 1 : -1);
                     distractor = correctAnswer + offset;
-                } else if (type < 0.75) {
+                } 
+                // 25% sjanse: Feil faktor i (i±1) x j
+                else if (type < 0.75) {
                     const i_offset = (Math.random() < 0.5 && i > 1) ? -1 : 1;
                     distractor = (i + i_offset) * j;
-                } else {
+                } 
+                // 25% sjanse: Feil faktor j - i x (j±1)
+                else {
                     const j_offset = (Math.random() < 0.5 && j > 1) ? -1 : 1;
                     distractor = i * (j + j_offset);
                 }
 
+                // Legg til distraktor hvis den er positiv og unik
                 if (distractor > 0 && !options.has(distractor)) {
                     options.add(distractor);
                 }
             }
             
+            // Fallback hvis vi ikke fikk nok distraktorer
             let fallbackValue = 1;
             while (options.size < 4) {
-                if (!options.has(fallbackValue) && fallbackValue !== correctAnswer ) { // Ensure fallback is not the answer
+                if (!options.has(fallbackValue) && fallbackValue !== correctAnswer) {
                     options.add(fallbackValue);
                 }
                 fallbackValue++;
-                 if (fallbackValue > correctAnswer + 20 && fallbackValue > 60) break; 
+                if (fallbackValue > correctAnswer + 20 && fallbackValue > 60) break;
             }
 
+            // Legg til spørsmålet i listen
             allPossibleQuestions.push({
                 text: questionText,
+                options: shuffleArray(Array.from(options)),
+                answer: correctAnswer
+            });
+        }
+    }
+    
+    // Juster antall spørsmål hvis det er færre unike kombinasjoner enn 20
+    if (allPossibleQuestions.length < NUM_QUESTIONS_TO_ASK) {
+        NUM_QUESTIONS_TO_ASK = allPossibleQuestions.length;
+    }
+}
+
+/**
+ * Velger et tilfeldig utvalg spørsmål for quizen.
+ */
+function selectRandomQuestions() {
+    currentQuestions = shuffleArray([...allPossibleQuestions]).slice(0, NUM_QUESTIONS_TO_ASK);
+}
+
+/**
+// ============================================================================
+// QUIZ-FUNKSJONER
+// ============================================================================
+
+/**
+ * Viser gjeldende spørsmål med svaralternativer.
+ * Hvis alle spørsmål er besvart, vises resultatene.
+ */
+ * Stokker en array tilfeldig ved hjelp av Fisher-Yates algoritme.
+ * 
+ * @param {Array} array - Array som skal stokkes
+ * @returns {Array} Den stokkede arrayen
+ */                text: questionText,
                 options: shuffleArray(Array.from(options)),
                 answer: correctAnswer
             });
@@ -166,13 +258,28 @@ function generateAllPossibleQuestions() {
 
 }
 
-function selectRandomQuestions() {
-    currentQuestions = shuffleArray([...allPossibleQuestions]).slice(0, NUM_QUESTIONS_TO_ASK);
-}
+// Svar-håndtering
+let selectedAnswerValue = null;
+let selectedButtonElement = null;
+
+/**
+ * Håndterer klikk på et svaralternativ.
+ * Markerer det valgte alternativet og aktiverer sjekk-knappen.
+ * 
+ * @param {number} option - Svarverdien som ble valgt
+ * @param {HTMLElement} buttonEl - Knappen som ble klikket
+ */}
 
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
+/**
+ * Håndterer klikk på neste-knappen.
+ * Knappen har tre moduseringseffekter:
+ * 1. "Sjekk Svar" - Sjekker svaret og gir tilbakemelding
+ * 2. "Neste Spørsmål" - Går til neste spørsmål
+ * 3. "Se Resultater" - Viser sluttresultater
+ */
         [array[i], array[j]] = [array[j], array[i]];
     }
     return array;
@@ -213,6 +320,9 @@ function handleOptionClick(option, buttonEl) {
 
     document.querySelectorAll('.option-btn').forEach(btn => btn.classList.remove('selected'));
     buttonEl.classList.add('selected');
+/**
+ * Viser sluttresultatene og restart-knapp.
+ */
     selectedAnswerValue = option;
     selectedButtonElement = buttonEl;
     nextButton.style.display = 'block';
@@ -221,6 +331,10 @@ function handleOptionClick(option, buttonEl) {
 function handleNextButtonClick() {
     if (nextButton.textContent === 'Sjekk Svar') {
         if (selectedAnswerValue === null) {
+/**
+ * Starter (eller restarter) quizen.
+ * Nullstiller tilstand, genererer nye spørsmål, og viser første spørsmål.
+ */
             feedbackEl.textContent = "Vennligst velg et svar.";
             feedbackEl.style.color = "#e67e22"; // Orange for warning
             return;
@@ -253,6 +367,14 @@ function handleNextButtonClick() {
             nextButton.textContent = 'Neste Spørsmål';
         } else {
             nextButton.textContent = 'Se Resultater';
+// ============================================================================
+// INITIALISER
+// ============================================================================
+
+/**
+ * Initialiserer quizen når DOM er lastet.
+ * Leser MAX_TABLE_NUMBER fra HTML-attributt og starter quizen.
+ */
         }
 
     } else if (nextButton.textContent === 'Neste Spørsmål') {

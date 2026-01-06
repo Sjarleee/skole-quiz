@@ -3,77 +3,241 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Velg en Quiz</title>
+    <title>Skolequiz - Læringsportalen</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        * {
             margin: 0;
             padding: 0;
-            background-color: #f4f7f6; /* Litt endret bakgrunnsfarge for konsistens */
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            padding: 20px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .quiz-categories {
+            display: grid;
+            gap: 30px;
+        }
+
+        .category-section {
+            background-color: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .category-section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+            font-size: 1.5em;
+        }
+
+        .category-description {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+
+        .quiz-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .quiz-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: transform 0.3s, box-shadow 0.3s;
             display: flex;
             flex-direction: column;
-            align-items: center; /* Sentrerer .container horisontalt */
-            min-height: 100vh;
-            padding: 20px; /* Lagt til padding på alle sider */
-            box-sizing: border-box; /* Inkluderer padding og border i elementets totale bredde/høyde */
+            justify-content: space-between;
+            min-height: 100px;
         }
-        .container {
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-            width: 100%;
-            max-width: 600px;
-            text-align: center; /* Beholder sentrert tekst inni containeren */
+
+        .quiz-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
         }
-        .home-link {
-            display: block;
-            text-align: center; /* Eller left/right om du foretrekker */
-            margin-bottom: 25px;
-            font-size: 1.1em;
-            color: #d9534f; /* Bruker samme farge som quiz-knappene for konsistens */
-            text-decoration: none;
-            font-weight: bold;
+
+        .quiz-card h3 {
+            font-size: 1.2em;
+            margin-bottom: 8px;
         }
-        .home-link:hover {
-            color: #c9302c; /* Mørkere nyanse ved hover */
-            text-decoration: underline;
+
+        .quiz-card p {
+            font-size: 0.9em;
+            opacity: 0.9;
         }
-        h1 {
-            color: #333;
-            margin-bottom: 30px;
+
+        /* Ulike farger for ulike kategorier */
+        .math-quiz {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
         }
-        .quiz-list a {
-            display: block;
-            background-color: #d9534f; /* Samme farge som quiz-knappene */
+
+        .language-quiz {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .social-quiz {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        .fun-quiz {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+
+        .interactive-quiz {
+            background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
+        }
+
+        .footer {
+            text-align: center;
             color: white;
-            padding: 15px 20px;
-            margin-bottom: 15px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-size: 1.1em;
-            transition: background-color 0.2s;
+            margin-top: 50px;
+            padding: 20px;
+            font-size: 0.9em;
+            opacity: 0.8;
         }
-        .quiz-list a:hover {
-            background-color: #c9302c;
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .quiz-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="header">
+        <h1>🎓 Skolequiz</h1>
+        <p>Interaktive læringsspill for alle aldre</p>
+    </div>
+
     <div class="container">
-        <a href="index.html" class="home-link">Hjem</a>
-        <h1>Velg en Quiz</h1>
-        <div class="quiz-list">
-            <a href="addisjonsquiz/index.html">Addisjonsquiz (Svar 0-100)</a>
-            <a href="202506-krle.html">Hinduismen Quiz (7. trinn)</a>
-            <a href="gangetabell-quiz/index-1-5.html">Gangetabell Quiz (1-5)</a>
-            <a href="gangetabell-quiz/index-1-10.html">Gangetabell Quiz (1-10)</a>
-            <a href="gangetabell-quiz/index.html">Gangetabell Quiz (1-20)</a>
-            <a href="samfunnsfag-2025.html">Samfunnsfag Quiz 2025</a>
-            <a href="ordklasse_quiz.html">Ordklasse Quiz (Adjektiv, Verb, Substantiv)</a>
-            <!-- Legg til flere linker her når du har flere quizer -->
-            <!-- Eksempel: <a href="annen_quiz.html">En Annen Quiz</a> -->
+        <div class="quiz-categories">
+            
+            <!-- MATEMATIKK -->
+            <div class="category-section">
+                <h2>🔢 Matematikk</h2>
+                <p class="category-description">Øv på matematikk på en morsom måte med våre interaktive quizer</p>
+                <div class="quiz-grid">
+                    <a href="gangetabell-quiz/index-1-5.html" class="quiz-card math-quiz">
+                        <h3>Gangetabell 1-5</h3>
+                        <p>Perfekt for nybegynnere</p>
+                    </a>
+                    <a href="gangetabell-quiz/index-1-10.html" class="quiz-card math-quiz">
+                        <h3>Gangetabell 1-10</h3>
+                        <p>Standard gangetabell</p>
+                    </a>
+                    <a href="gangetabell-quiz/index.html" class="quiz-card math-quiz">
+                        <h3>Gangetabell 1-20</h3>
+                        <p>For de som vil ha ekstra utfordring</p>
+                    </a>
+                    <a href="addisjonsquiz/index.html" class="quiz-card math-quiz">
+                        <h3>Addisjonsquiz</h3>
+                        <p>Øv på addisjon (svar 0-100)</p>
+                    </a>
+                </div>
+            </div>
+
+            <!-- NORSK -->
+            <div class="category-section">
+                <h2>📚 Norsk</h2>
+                <p class="category-description">Lær grammatikk og språk gjennom morsomme øvelser</p>
+                <div class="quiz-grid">
+                    <a href="ordklasse_quiz.html" class="quiz-card language-quiz">
+                        <h3>Ordklasse Quiz</h3>
+                        <p>Adjektiv, verb og substantiv</p>
+                    </a>
+                </div>
+            </div>
+
+            <!-- SAMFUNNSFAG & KRLE -->
+            <div class="category-section">
+                <h2>🌍 Samfunnsfag & KRLE</h2>
+                <p class="category-description">Lær om samfunn, kultur og religion</p>
+                <div class="quiz-grid">
+                    <a href="samfunnsfag-2025.html" class="quiz-card social-quiz">
+                        <h3>Samfunnsfag 2025</h3>
+                        <p>Aktuell samfunnskunnskap</p>
+                    </a>
+                    <a href="krle-quizer/hinduismen-7trinn/index.html" class="quiz-card social-quiz">
+                        <h3>Hinduismen Quiz</h3>
+                        <p>7. trinn KRLE - 45 spørsmål</p>
+                    </a>
+                    <a href="krle-quizer/islam-9trinn/index.html" class="quiz-card social-quiz">
+                        <h3>Islam Quiz</h3>
+                        <p>9. trinn KRLE - 100 spørsmål</p>
+                    </a>
+                </div>
+            </div>
+
+            <!-- INTERAKTIVE SPILL -->
+            <div class="category-section">
+                <h2>🎨 Interaktive Spill</h2>
+                <p class="category-description">Lekbasert læring for de minste</p>
+                <div class="quiz-grid">
+                    <a href="signes-fargespill/index.html" class="quiz-card interactive-quiz">
+                        <h3>Signes Fargespill</h3>
+                        <p>Lær farger med lyd og animasjoner</p>
+                    </a>
+                </div>
+            </div>
+
+            <!-- MORO -->
+            <div class="category-section">
+                <h2>😄 For Moro Skyld</h2>
+                <p class="category-description">Litt humor i hverdagen</p>
+                <div class="quiz-grid">
+                    <a href="fredagsvisdom.html" class="quiz-card fun-quiz">
+                        <h3>Fredagsvisdom</h3>
+                        <p>50 tullete visdomsord</p>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer">
+            <p>💡 Opprettet med kjærlighet for læring • 2026</p>
+            <p><a href="README.md" style="color: white;">📖 Dokumentasjon for utviklere</a></p>
         </div>
     </div>
 </body>

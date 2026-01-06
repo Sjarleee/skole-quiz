@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signes Fargespill</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <a href="../index.html" class="home-link">&larr; Tilbake til hovedsiden</a>
+        <h1 id="question">Laster spill...</h1>
+        <div class="options-container" id="options-container">
+            <!-- Alternativer blir lagt til her av JavaScript -->
+        </div>
+        <div id="feedback"></div>
+        <button id="next-button">Neste runde!</button>
+    </div>
+
+    <!-- Last inn quiz-engine -->
+    <script src="quiz-engine.js"></script>
+    
+    <!-- Start fargequizen -->
+    <script>
+        // Start quizen når siden lastes
+        startQuiz(colorQuizConfig);
+    </script>
+</body>
+</html>

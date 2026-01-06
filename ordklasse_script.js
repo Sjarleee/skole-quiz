@@ -1,3 +1,18 @@
+/**
+ * ORDKLASSE QUIZ
+ * 
+ * En interaktiv quiz for å lære forskjellen mellom adjektiv, verb og substantiv.
+ * Quizen velger tilfeldig 10 ord fra en større ordbank og tester eleven.
+ * 
+ * @author Skolequiz Prosjekt
+ * @version 1.0
+ * @date 2026-01-06
+ */
+
+// ============================================================================
+// DOM-ELEMENTER
+// ============================================================================
+
 const questionWordEl = document.getElementById('question-word');
 const optionsContainer = document.getElementById('options');
 const feedbackEl = document.getElementById('feedback');
@@ -8,8 +23,26 @@ const scoreContainer = document.getElementById('score-container');
 const scoreTextEl = document.getElementById('score-text');
 const restartBtn = document.getElementById('restart-btn');
 
+// ============================================================================
+// KONFIGURASJON
+// ============================================================================
+
+/** De tre ordklassene som testes */
 const wordClasses = ["Adjektiv", "Verb", "Substantiv"];
 
+// ============================================================================
+// ORDBANK
+// ============================================================================
+
+/**
+ * Komplett ordbank med 200+ norske ord fordelt på tre ordklasser.
+ * Hver oppføring har:
+ * - word: Ordet som vises til eleven
+ * - type: Ordklasse (Substantiv, Verb, eller Adjektiv)
+ * 
+ * For å legge til nye ord, følg samme format:
+ * { word: "dittord", type: "Substantiv|Verb|Adjektiv" }
+ */
 let allQuestions = [
     { word: "hus", type: "Substantiv" },
     { word: "løper", type: "Verb" },
@@ -164,42 +197,132 @@ let allQuestions = [
     { word: "følger", type: "Verb" },
     { word: "smal", type: "Adjektiv" },
     { word: "hule", type: "Substantiv" },
-    { word: "utforsker", type: "Verb" },
-    { word: "hemmelig", type: "Adjektiv" },
-    { word: "skatt", type: "Substantiv" },
-    { word: "finner", type: "Verb" },
-    { word: "dyrbar", type: "Adjektiv" },
-    { word: "kart", type: "Substantiv" },
-    { word: "studerer", type: "Verb" },
-    { word: "nøyaktig", type: "Adjektiv" },
-    { word: "kompass", type: "Substantiv" },
-    { word: "peker", type: "Verb" },
-    { word: "riktig", type: "Adjektiv" }
-];
+// ============================================================================
+// QUIZ-TILSTAND
+// ============================================================================
 
-
+/** Ordene som brukes i gjeldende quiz-runde */
 let currentQuestions = [];
+
+/** Indeks for nåværende spørsmål (0-basert) */
 let currentQuestionIndex = 0;
+
+/** Antall riktige svar i gjeldende runde */
 let score = 0;
-const totalQuizQuestions = 10; // Antall spørsmål per runde
 
-function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-}
+// ============================================================================
+// QUIZ-FUNKSJONER
+// ============================================================================
 
+/**
+ * Starter en ny quiz-runde.
+ * Velger 10 tilfeldige ord fra ordbanken og nullstiller poeng.
+ */
 function startGame() {
+    // Stokk ordbanken og velg et visst antall ord
     shuffleArray(allQuestions);
     currentQuestions = allQuestions.slice(0, totalQuizQuestions);
+    
+    // Sikkerhetskontroll
     if (currentQuestions.length === 0) {
         questionWordEl.textContent = "Ingen ord funnet!";
         optionsContainer.innerHTML = "";
         return;
+    // Sjekk om vi har kommet til slutten
+    if (currentQuestionIndex >= currentQuestions.length) {
+        endQuiz();
+        return;
     }
-    currentQuestionIndex = 0;
-    score = 0;
+
+    // Hent gjeldende ord
+    const currentWordData = currentQuestions[currentQuestionIndex];
+    
+    // Vis ordet og teller
+    questionWordEl.textContent = currentWordData.word;
+    questionCounterEl.textContent = `Ord ${currentQuestionIndex + 1} av ${currentQuestions.length}`;
+    
+    // Nullstill UI
+    optionsContainer.innerHTML = '';
+    feedbackEl.textContent = '';
+    nextBtn.style.display = 'none';
+
+    // Lag knapper for hver ordklasse
+    wordClasses.forEach(wordClass => {
+        const button = document.createElement('button');
+        button.textContent = wordClass;
+    // Deaktiver alle knapper og marker riktig svar
+    document.querySelectorAll('.option-btn').forEach(btn => {
+        btn.disabled = true;
+        
+        // Marker riktig svar med grønn farge
+        if (btn.textContent === correctType) {
+            btn.classList.add('correct');
+        } 
+        // Marker feil valg med rød farge (kun hvis eleven valgte feil)
+        else if (btn === button && selectedType !== correctType) {
+            btn.classList.add('wrong');
+        }
+    });
+
+    // Gi tilbakemelding
+    if (selectedType === correctType) {
+        feedbackEl.textContent = 'Riktig!';
+        feedbackEl.style.color = 'green';
+        score++;
+    } else {
+        feedbackEl.textContent = `Feil. Riktig svar var ${correctType}.`;
+    // Skjul quiz, vis resultat
+    quizContainer.style.display = 'none';
+    scoreContainer.style.display = 'block';
+    
+    // Beregn prosent og gi tilpasset melding
+    const percentage = (score / currentQuestions.length) * 100;
+    let message = "";
+
+    if (percentage === 100) {
+        message = "Fantastisk! Alle riktige! 🎉";
+    } else if (percentage >= 70) {
+        message = "Kjempebra jobba!";
+    } else if (percentage >= 50) {
+        message = "Bra forsøk!";
+    } else {
+        message = "Bedre lykke neste gang!";
+    }
+    
+    scoreTextEl.textContent = `Du fikk ${score} av ${currentQuestions.length} riktige. ${message}`;
+}
+
+// ============================================================================
+// EVENT LISTENERS
+// ============================================================================
+
+/**
+ * Håndterer klikk på "Neste Ord"-knappen.
+ * Går til neste spørsmål og nullstiller UI.
+ */
+nextBtn.addEventListener('click', () => {
+    currentQuestionIndex++;
+    
+    // Nullstill knapper for neste spørsmål
+    document.querySelectorAll('.option-btn').forEach(btn => {
+        btn.classList.remove('correct', 'wrong');
+        btn.disabled = false;
+    });
+    
+    loadQuestion();
+});
+
+/**
+ * Håndterer klikk på "Spill Igjen"-knappen.
+ * Starter en ny quiz-runde.
+ */
+restartBtn.addEventListener('click', startGame);
+
+// ============================================================================
+// INITIALISER
+// ============================================================================
+
+// Start første runde
     quizContainer.style.display = 'block';
     scoreContainer.style.display = 'none';
     nextBtn.style.display = 'none';

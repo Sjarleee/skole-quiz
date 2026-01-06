@@ -1,0 +1,144 @@
+/**
+ * QUIZ STYLING
+ * 
+ * Standard CSS for quiz-systemet
+ * Kan tilpasses for individuelle quizer
+ */
+
+/* ============================================================================
+   GENERELL LAYOUT
+   ============================================================================ */
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f0f8ff; /* Lys blå bakgrunn */
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.game-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 100%;
+    max-width: 500px;
+}
+
+/* ============================================================================
+   NAVIGASJON
+   ============================================================================ */
+
+.home-link {
+    display: block;
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 1.1em;
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.home-link:hover {
+    text-decoration: underline;
+}
+
+/* ============================================================================
+   SPØRSMÅL OG TILBAKEMELDING
+   ============================================================================ */
+
+#question {
+    font-size: 1.8em;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+#feedback {
+    font-size: 1.5em;
+    font-weight: bold;
+    min-height: 30px; /* Unngå hopping */
+    margin-bottom: 20px;
+}
+
+.feedback-correct {
+    color: #28a745; /* Grønn */
+}
+
+.feedback-wrong {
+    color: #dc3545; /* Rød */
+}
+
+/* ============================================================================
+   SVARALTERNATIVER
+   ============================================================================ */
+
+.options-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px; /* Mellomrom mellom alternativene */
+    margin-bottom: 30px;
+    min-height: 120px; /* Unngå hopping når alternativer endres */
+}
+
+/* Standard styling for sirkler (farger) */
+.circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 3px solid transparent;
+}
+
+.circle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+}
+
+/* ============================================================================
+   KNAPPER
+   ============================================================================ */
+
+#next-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    font-size: 1.2em;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    display: none; /* Skjult i starten */
+}
+
+#next-button:hover {
+    background-color: #0056b3;
+}
+
+/* ============================================================================
+   RESPONSIVE DESIGN
+   ============================================================================ */
+
+@media (max-width: 600px) {
+    .game-container {
+        padding: 20px;
+    }
+
+    #question {
+        font-size: 1.5em;
+    }
+
+    .circle {
+        width: 80px;
+        height: 80px;
+    }
+}
