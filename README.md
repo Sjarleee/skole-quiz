@@ -2,6 +2,12 @@
 
 En samling av interaktive læringsspill og quizer for barn og elever på ulike alderstrinn. Alle quizene er bygget med HTML, CSS og vanilla JavaScript.
 
+## 🌐 Live Demo
+
+**Hovedside**: [https://sjarleee.github.io/skole-quiz/](https://sjarleee.github.io/skole-quiz/)
+
+**GitHub Repository**: [https://github.com/Sjarleee/skole-quiz](https://github.com/Sjarleee/skole-quiz)
+
 ## 📋 Innholdsfortegnelse
 
 - [Oversikt](#oversikt)
@@ -44,6 +50,16 @@ skolequiz/
 ├── addisjonsquiz/               # Addisjons-quiz
 │   ├── index.html               # Quiz-side
 │   └── addisjon-quiz.js         # Quiz-logikk
+│
+├── krle-quizer/                 # KRLE-quizer (Religion og livssyn)
+│   ├── shared/
+│   │   └── quiz-style.css       # Felles styling for KRLE
+│   ├── hinduismen-7trinn/
+│   │   └── index.html           # 45 spørsmål om hinduismen
+│   ├── islam-9trinn/
+│   │   ├── index.html           # Islam quiz hovedside
+│   │   └── islam-quiz.js        # 100 spørsmål om islam
+│   └── README.md                # KRLE dokumentasjon
 │
 ├── ordklasse_quiz.html          # Ordklasse-quiz (grammatikk)
 ├── ordklasse_script.js          # Logikk for ordklasse
@@ -123,16 +139,35 @@ let allQuestions = [
 
 Kunnskapsquiz om samfunnsrelevante emner.
 
-#### Hinduismen Quiz
-**Fil**: `202506-krle.html`
+#### KRLE-quizer
+**Mappe**: `krle-quizer/`
 
-KRLE-quiz for 7. trinn om hinduismen.
+Organiserte KRLE-quizer for ulike alderstrinn:
+
+**Hinduismen Quiz (7. trinn)**
+- **Sted**: `krle-quizer/hinduismen-7trinn/`
+- **Spørsmål**: 45 spørsmål fordelt på flere temaer
+- **Live**: [https://sjarleee.github.io/skole-quiz/krle-quizer/hinduismen-7trinn/](https://sjarleee.github.io/skole-quiz/krle-quizer/hinduismen-7trinn/)
+
+**Islam Quiz (9. trinn)**
+- **Sted**: `krle-quizer/islam-9trinn/`
+- **Spørsmål**: 100 spørsmål fordelt på 8 temaer
+  - Grunnleggende om islam (20)
+  - Profeten Muhammed (15)
+  - Koranen (15)
+  - Hadith og sunna (10)
+  - De fem søylene (15)
+  - Islamsk historie (10)
+  - Shia og sunni (10)
+  - Islam i verden i dag (5)
+- **Live**: [https://sjarleee.github.io/skole-quiz/krle-quizer/islam-9trinn/](https://sjarleee.github.io/skole-quiz/krle-quizer/islam-9trinn/)
 
 **Funksjoner**:
-- Flervalg spørsmål
+- Flervalg spørsmål med 4 alternativer
 - Forklaringer ved feil svar
 - Navigasjon mellom spørsmål
-- Resultatoppsummering
+- Resultatoppsummering med prosent
+- Felles styling for konsistent design
 
 **Hvordan legge til nye spørsmål**:
 ```javascript
@@ -145,6 +180,8 @@ const questions = [
     }
 ];
 ```
+
+Se `krle-quizer/README.md` for full dokumentasjon.
 
 ### Interaktive Spill
 
@@ -369,5 +406,6 @@ For spørsmål eller forslag til forbedringer, kontakt prosjekteier.
 
 ---
 
-**Sist oppdatert**: Januar 2026  
-**Versjon**: 1.0
+**Sist oppdatert**: 6. januar 2026  
+**Versjon**: 2.0  
+**Live på**: [GitHub Pages](https://sjarleee.github.io/skole-quiz/)

@@ -2,6 +2,11 @@
 
 Samling av multiple choice quizer for KRLE (Kristendom, Religion, Livssyn og Etikk).
 
+## 🌐 Live Quizer
+
+- **Hinduismen (7. trinn)**: [https://sjarleee.github.io/skole-quiz/krle-quizer/hinduismen-7trinn/](https://sjarleee.github.io/skole-quiz/krle-quizer/hinduismen-7trinn/)
+- **Islam (9. trinn)**: [https://sjarleee.github.io/skole-quiz/krle-quizer/islam-9trinn/](https://sjarleee.github.io/skole-quiz/krle-quizer/islam-9trinn/)
+
 ## 📋 Oversikt
 
 Denne mappen inneholder quizer om ulike religioner og trosretninger, tilpasset ulike alderstrinn.
