@@ -351,7 +351,7 @@ function displayOptions(options, correctAnswer) {
         const button = document.createElement('button');
         button.className = 'option-button';
         button.textContent = option;
-        button.onclick = () => checkAnswer(option, correctAnswer, button);
+        button.onclick = () => checkAnswer(parseInt(option), correctAnswer, button);
         optionsEl.appendChild(button);
     });
 }
