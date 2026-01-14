@@ -8,6 +8,20 @@
  * @date 2026-01-14
  */
 
+// Beregn areal automatisk basert på rektanglene
+function calculateArea(rectangles) {
+    // Bygg et grid for å finne alle celler som er fylt
+    const cells = new Set();
+    rectangles.forEach(rect => {
+        for (let y = rect.y; y < rect.y + rect.h; y++) {
+            for (let x = rect.x; x < rect.x + rect.w; x++) {
+                cells.add(`${x},${y}`);
+            }
+        }
+    });
+    return cells.size;
+}
+
 // Beregn omkrets automatisk basert på rektanglene
 function calculatePerimeter(rectangles) {
     // Bygg et grid for å finne alle celler som er fylt
@@ -253,7 +267,8 @@ function initQuiz() {
     for (let i = 0; i < Math.min(totalQuestions, shuffledFigures.length); i++) {
         const figure = shuffledFigures[i];
         
-        // Beregn riktig omkrets automatisk
+        // Beregn riktig areal og omkrets automatisk
+        const calculatedArea = calculateArea(figure.rectangles);
         const calculatedPerimeter = calculatePerimeter(figure.rectangles);
         
         // Avgjør om vi spør om areal eller omkrets
@@ -264,7 +279,7 @@ function initQuiz() {
                 figure: figure,
                 type: 'area',
                 question: 'Hva er arealet av figuren?',
-                correctAnswer: figure.area,
+                correctAnswer: calculatedArea,
                 unit: 'kvadratenheter'
             });
         } else {
