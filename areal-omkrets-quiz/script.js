@@ -8,6 +8,40 @@
  * @date 2026-01-14
  */
 
+// Beregn omkrets automatisk basert på rektanglene
+function calculatePerimeter(rectangles) {
+    // Bygg et grid for å finne alle celler som er fylt
+    const cells = new Set();
+    rectangles.forEach(rect => {
+        for (let y = rect.y; y < rect.y + rect.h; y++) {
+            for (let x = rect.x; x < rect.x + rect.w; x++) {
+                cells.add(`${x},${y}`);
+            }
+        }
+    });
+    
+    // Tell omkrets ved å sjekke hver celle
+    let perimeter = 0;
+    cells.forEach(cellStr => {
+        const [x, y] = cellStr.split(',').map(Number);
+        // Sjekk alle 4 sider
+        const neighbors = [
+            `${x},${y-1}`,    // opp
+            `${x},${y+1}`,    // ned
+            `${x-1},${y}`,    // venstre
+            `${x+1},${y}`     // høyre
+        ];
+        // Tell hvor mange sider som grenser mot utenfor
+        neighbors.forEach(neighbor => {
+            if (!cells.has(neighbor)) {
+                perimeter++;
+            }
+        });
+    });
+    
+    return perimeter;
+}
+
 // Figurdefinisjoner - hver figur består av rektangler på rutenettet
 // Format: {x, y, width, height} der hver enhet = 1 rute
 const figures = [
@@ -219,6 +253,9 @@ function initQuiz() {
     for (let i = 0; i < Math.min(totalQuestions, shuffledFigures.length); i++) {
         const figure = shuffledFigures[i];
         
+        // Beregn riktig omkrets automatisk
+        const calculatedPerimeter = calculatePerimeter(figure.rectangles);
+        
         // Avgjør om vi spør om areal eller omkrets
         const askAboutArea = Math.random() < 0.5;
         
@@ -235,7 +272,7 @@ function initQuiz() {
                 figure: figure,
                 type: 'perimeter',
                 question: 'Hva er omkretsen av figuren?',
-                correctAnswer: figure.perimeter,
+                correctAnswer: calculatedPerimeter,
                 unit: 'enheter'
             });
         }
