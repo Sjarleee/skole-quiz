@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nervesystemet og hormonsystemet Quiz - Naturfag</title>
+    <link rel="stylesheet" href="../../krle-quizer/shared/quiz-style.css">
+</head>
+<body>
+    <div class="quiz-container">
+        <a href="../../index.html" class="back-button">&larr; Tilbake til hovedsiden</a>
+        <h1>Nervesystemet og hormonsystemet Quiz</h1>
+        <p class="quiz-description">Test din kunnskap om samarbeidet mellom nervesystemet og hormonsystemet</p>
+
+        <div id="quiz-area">
+            <div class="question-area">
+                <p id="question-number"></p>
+                <p id="question-text" class="question-text"></p>
+                <div id="options-container" class="options">
+                    <!-- Alternativer lastes her -->
+                </div>
+            </div>
+            <div id="feedback-area" class="feedback hidden"></div>
+            <div class="navigation">
+                <button id="submit-btn" disabled>Send inn svar</button>
+                <button id="next-btn" class="hidden">Neste spørsmål</button>
+            </div>
+        </div>
+
+        <div id="result-area" class="result-area hidden">
+            <h2 id="score-text"></h2>
+            <div class="navigation">
+                <button id="restart-btn">Start på nytt</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="quiz.js"></script>
+</body>
+</html>
