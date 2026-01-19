@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake et Beast - Klassisk Slangemat</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-wrapper">
+        <a href="../../index.html" class="back-button">&larr; Tilbake til hovedsiden</a>
+        
+        <div class="game-container">
+            <h1>🐍 Snake et Beast</h1>
+            <p class="subtitle">Spis epler og voks! Unngå veggene og deg selv!</p>
+            
+            <div class="game-info">
+                <div class="score-display">
+                    <span class="label">Poeng:</span>
+                    <span id="score">0</span>
+                </div>
+                <div class="high-score-display">
+                    <span class="label">Rekord:</span>
+                    <span id="high-score">0</span>
+                </div>
+            </div>
+
+            <div id="game-screen">
+                <canvas id="gameCanvas" width="400" height="400"></canvas>
+                
+                <div id="start-screen" class="overlay-screen">
+                    <h2>Klar til å spille?</h2>
+                    <p>Bruk piltastene til å styre slangen</p>
+                    <p>🍎 Spis epler for å vokse og få poeng</p>
+                    <p>⚠️ Unngå å treffe veggene eller deg selv!</p>
+                    <button id="start-btn" class="game-btn">Start Spillet</button>
+                </div>
+
+                <div id="game-over-screen" class="overlay-screen hidden">
+                    <h2>Game Over!</h2>
+                    <p id="final-score"></p>
+                    <p id="new-record" class="hidden">🎉 Ny rekord!</p>
+                    <button id="restart-btn" class="game-btn">Spill Igjen</button>
+                </div>
+            </div>
+
+            <div class="controls-info">
+                <p><strong>Kontroller:</strong></p>
+                <div class="key-hints">
+                    <span class="key">↑</span>
+                    <span class="key">↓</span>
+                    <span class="key">←</span>
+                    <span class="key">→</span>
+                </div>
+                <p class="mobile-hint">På mobil: Sveip for å styre!</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
