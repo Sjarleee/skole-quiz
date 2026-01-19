@@ -372,11 +372,34 @@ document.addEventListener('DOMContentLoaded', () => {
                          selectedWords.every((word, index) => word === question.correctWords[index]);
         
         if (isCorrect) {
-            feedbackElement.textContent = '✓ Riktig!';
+            feedbackElement.innerHTML = '<span class="feedback-icon">✓</span> Riktig!';
             feedbackElement.className = 'feedback correct';
             score++;
         } else {
-            feedbackElement.textContent = `✗ Feil. Riktig svar: ${question.description}`;
+            const hours = question.hours;
+            const minutes = question.minutes;
+            let explanation = '';
+            
+            // Lag forklaring basert på tid
+            if (minutes === 0) {
+                explanation = `Hele timer sier vi "klokka" + timetallet.`;
+            } else if (minutes === 15) {
+                explanation = `15 minutter over er det samme som kvart over.`;
+            } else if (minutes === 30) {
+                explanation = `30 minutter er halvveis til neste time, derfor "halv" + neste time.`;
+            } else if (minutes === 45) {
+                explanation = `15 minutter før neste time er "kvart på".`;
+            } else if (minutes < 30) {
+                explanation = `Når klokka er ${minutes} minutter over, sier vi antall minutter + "over" + timetallet.`;
+            } else if (minutes > 30) {
+                explanation = `Når klokka er over halv, teller vi minutter til neste time.`;
+            }
+            
+            feedbackElement.innerHTML = `
+                <span class="feedback-icon">✗</span> Feil. 
+                <div class="feedback-answer">Riktig svar: <strong>${question.description}</strong></div>
+                <div class="feedback-explanation">${explanation}</div>
+            `;
             feedbackElement.className = 'feedback incorrect';
         }
         

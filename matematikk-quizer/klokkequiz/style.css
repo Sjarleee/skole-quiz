@@ -128,6 +128,29 @@ h1 {
     color: #e74c3c;
 }
 
+.feedback-icon {
+    font-size: 1.3em;
+    margin-right: 5px;
+}
+
+.feedback-answer {
+    margin-top: 8px;
+    font-size: 0.95em;
+}
+
+.feedback-answer strong {
+    color: #43cea2;
+}
+
+.feedback-explanation {
+    margin-top: 6px;
+    font-size: 0.85em;
+    font-weight: normal;
+    color: #666;
+    font-style: italic;
+    line-height: 1.4;
+}
+
 /* Knapper */
 .button-row {
     display: flex;
@@ -229,6 +252,10 @@ h1 {
         font-size: 1.6em;
     }
     
+    .instruction {
+        font-size: 1em;
+    }
+    
     #clock {
         width: 200px;
         height: 200px;
@@ -251,5 +278,23 @@ h1 {
     
     .button {
         width: 100%;
+    }
+    
+    #feedback {
+        font-size: 1em;
+    }
+    
+    .feedback-icon {
+        font-size: 1.2em;
+    }
+    
+    .feedback-answer {
+        font-size: 0.9em;
+        margin-top: 6px;
+    }
+    
+    .feedback-explanation {
+        font-size: 0.8em;
+        margin-top: 5px;
     }
 }
