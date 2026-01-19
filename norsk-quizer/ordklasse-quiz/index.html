@@ -3,26 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Halveringsquiz (Tall 0-200)</title>
+    <title>Ordklasse Quiz</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="app-container">
-        <a href="../index.html" class="button back-button">&larr; Tilbake til hovedsiden</a>
-        <h1>Halveringsquiz (Tall 0-200)</h1>
+        <a href="../../index.html" class="button back-button">&larr; Tilbake til hovedsiden</a>
+        <h1>Ordklasse Quiz</h1>
+        <p class="quiz-description">Er ordet et adjektiv, verb eller substantiv?</p>
 
         <div id="quiz-container">
             <div id="question-counter"></div>
-            <h2 id="question">Laster spørsmål...</h2>
-            <div id="options" class="options-grid">
+            <h2 id="question-word">Laster ord...</h2>
+            <div id="options" class="options-container">
                 <!-- Alternativer lastes her av JavaScript -->
             </div>
             <div id="feedback"></div>
-            <button id="next-btn" style="display:none;">Neste Spørsmål</button>
+            <button id="next-btn" style="display:none;">Neste Ord</button>
         </div>
 
         <div id="score-container" style="display:none;">
-            <!-- Resultater vises her -->
+            <h2>Resultat</h2>
+            <p id="score-text"></p>
+            <button id="restart-btn">Spill Igjen</button>
         </div>
     </div>
 

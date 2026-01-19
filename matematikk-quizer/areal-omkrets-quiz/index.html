@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Areal og Omkrets Quiz - 5. klasse</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <a href="../../index.html" class="button back-button">&larr; Tilbake til hovedsiden</a>
+        <h1>Areal og Omkrets Quiz</h1>
+        <p class="subtitle">5. klasse - Rettvinklede figurer på rutenett</p>
+
+        <div id="quiz-container">
+            <div id="question-counter"></div>
+            <h2 id="question">Laster spørsmål...</h2>
+            
+            <div id="figure-container">
+                <svg id="grid-svg" width="400" height="400"></svg>
+            </div>
+            
+            <div id="options" class="options-grid">
+                <!-- Alternativer lastes her av JavaScript -->
+            </div>
+            <div id="feedback"></div>
+            <button id="next-btn" style="display:none;">Neste Spørsmål</button>
+        </div>
+
+        <div id="score-container" style="display:none;">
+            <!-- Resultater vises her -->
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

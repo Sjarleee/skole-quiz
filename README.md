@@ -21,9 +21,10 @@ En samling av interaktive læringsspill og quizer for barn og elever på ulike a
 
 Dette prosjektet inneholder ulike typer quizer kategorisert etter fag:
 
-- **Matematikk**: Gangetabell og addisjonsquizer
+- **Matematikk**: Gangetabell, addisjon, halvering, areal/omkrets og klokkequiz
 - **Norsk**: Ordklasse-quiz (grammatikk)
 - **Samfunnsfag & KRLE**: Kunnskapsquizer om samfunn og religion
+- **Naturfag**: Nervesystemet og hormonsystemet
 - **Interaktive Spill**: Lekbasert læring (farger, former)
 - **Moro**: Humor og underholdning
 
@@ -34,22 +35,43 @@ skolequiz/
 ├── index.html                    # Hovedside med alle quizer
 ├── README.md                     # Denne filen
 │
-├── signes-fargespill/           # Interaktivt fargespill
-│   ├── index.html               # Fargespill for barn
-│   ├── quiz-engine.js           # Generisk quiz-motor
-│   ├── style.css                # Styling
-│   └── README.md                # Dokumentasjon for quiz-systemet
+├── matematikk-quizer/           # Matematikk-quizer
+│   ├── gangetabell-quiz/        # Gangetabell-quizer
+│   │   ├── index.html           # 1-20 gangetabell
+│   │   ├── index-1-10.html      # 1-10 gangetabell
+│   │   ├── index-1-5.html       # 1-5 gangetabell (nybegynner)
+│   │   ├── script.js            # Quiz-logikk
+│   │   └── style.css            # Styling
+│   │
+│   ├── addisjonsquiz/           # Addisjons-quiz
+│   │   ├── index.html           # Quiz-side
+│   │   ├── addisjon-quiz.js     # Quiz-logikk
+│   │   └── README.md            # Dokumentasjon
+│   │
+│   ├── areal-omkrets-quiz/      # Areal og omkrets quiz
+│   │   ├── index.html           # Quiz-side (5. klasse)
+│   │   ├── script.js            # Quiz-logikk
+│   │   ├── style.css            # Styling
+│   │   └── README.md            # Dokumentasjon
+│   │
+│   ├── halverings-quiz/         # Halveringsquiz
+│   │   ├── index.html           # Quiz-side
+│   │   ├── script.js            # Quiz-logikk for halvering
+│   │   ├── style.css            # Styling
+│   │   └── README.md            # Dokumentasjon
+│   │
+│   └── klokkequiz/              # Lær å lese klokka
+│       ├── index.html           # Quiz-side med analog klokke
+│       ├── script.js            # Quiz-logikk
+│       ├── style.css            # Styling
+│       └── README.md            # Dokumentasjon
 │
-├── gangetabell-quiz/            # Gangetabell-quizer
-│   ├── index.html               # 1-20 gangetabell
-│   ├── index-1-10.html          # 1-10 gangetabell
-│   ├── index-1-5.html           # 1-5 gangetabell (nybegynner)
-│   ├── script.js                # Quiz-logikk
-│   └── style.css                # Styling
-│
-├── addisjonsquiz/               # Addisjons-quiz
-│   ├── index.html               # Quiz-side
-│   └── addisjon-quiz.js         # Quiz-logikk
+├── norsk-quizer/                # Norsk-quizer
+│   └── ordklasse-quiz/          # Ordklasse-quiz (grammatikk)
+│       ├── index.html           # Quiz-side
+│       ├── script.js            # Logikk for ordklasse
+│       ├── style.css            # Styling
+│       └── README.md            # Dokumentasjon
 │
 ├── krle-quizer/                 # KRLE-quizer (Religion og livssyn)
 │   ├── shared/
@@ -58,12 +80,22 @@ skolequiz/
 │   │   └── index.html           # 45 spørsmål om hinduismen
 │   ├── islam-9trinn/
 │   │   ├── index.html           # Islam quiz hovedside
-│   │   └── islam-quiz.js        # 100 spørsmål om islam
+│   │   ├── islam-quiz.js        # 100 spørsmål om islam
+│   │   └── README.md            # Dokumentasjon
 │   └── README.md                # KRLE dokumentasjon
 │
-├── ordklasse_quiz.html          # Ordklasse-quiz (grammatikk)
-├── ordklasse_script.js          # Logikk for ordklasse
-├── ordklasse_style.css          # Styling for ordklasse
+├── naturfag-quizer/             # Naturfag-quizer
+│   └── hormon-nerve-system/     # Nervesystemet og hormonsystemet
+│       ├── index.html           # Quiz-side
+│       ├── quiz.js              # 60 spørsmål
+│       └── README.md            # Dokumentasjon
+│
+├── interaktive-spill/           # Interaktive spill
+│   └── signes-fargespill/       # Interaktivt fargespill
+│       ├── index.html           # Fargespill for barn
+│       ├── quiz-engine.js       # Generisk quiz-motor
+│       ├── style.css            # Styling
+│       └── README.md            # Dokumentasjon for quiz-systemet
 │
 ├── samfunnsfag-2025.html        # Samfunnsfag quiz
 ├── 202506-krle.html             # Hinduismen quiz (KRLE)
@@ -75,7 +107,7 @@ skolequiz/
 ### Matematikk
 
 #### Gangetabell Quiz
-**Filer**: `gangetabell-quiz/`
+**Filer**: `matematikk-quizer/gangetabell-quiz/`
 
 Tre versjoner med ulik vanskelighetsgrad:
 - **1-5**: For nybegynnere (med visuell representasjon)
@@ -99,32 +131,68 @@ const DEFAULT_NUM_QUESTIONS_TO_ASK = 20;
 ```
 
 #### Addisjonsquiz
-**Filer**: `addisjonsquiz/`
+**Filer**: `matematikk-quizer/addisjonsquiz/`
 
 Quiz for å øve på addisjon med svar mellom 0-100.
 
 **Funksjoner**:
-- Tilfeldige addisjonsspørsmål
-- Flervalg med 4 alternativer
+- Tilfeldige addisjonsspørsmål (a + ? = sum)
+- 6 svaralternativer
+- 10 spørsmål per runde
 - Progresstracking
+
+#### Halveringsquiz
+**Filer**: `matematikk-quizer/halverings-quiz/`
+
+Quiz for å øve på halvering av tall mellom 0-200.
+
+**Funksjoner**:
+- Halvering av partall (0, 2, 4... 200)
+- 6 svaralternativer med intelligente distraktorer
+- 10 spørsmål per runde
+- Visuelt tiltalende design med gradient bakgrunn
+
+#### Areal og Omkrets Quiz
+**Filer**: `matematikk-quizer/areal-omkrets-quiz/`
+
+Quiz for 5. klasse om areal og omkrets av rettvinklede figurer på rutenett.
+
+**Funksjoner**:
+- Visuelle figurer på rutenett
+- Øv på både areal og omkrets
+- Tilpasset 5. klassetrinn
+- Responsivt design
+
+#### Klokkequiz
+**Filer**: `matematikk-quizer/klokkequiz/`
+
+Interaktiv quiz for å lære å lese analog klokke på norsk.
+
+**Funksjoner**:
+- Fullverdig analog klokke med SVG
+- Interaktive ordbokser - bygg tidsuttrykk
+- Norske tidsuttrykk (kvart over, halv, etc.)
+- Støtter 12 forskjellige tider
+- Distraktorer for ekstra utfordring
 
 ### Norsk
 
 #### Ordklasse Quiz
-**Filer**: `ordklasse_quiz.html`, `ordklasse_script.js`, `ordklasse_style.css`
+**Filer**: `norsk-quizer/ordklasse-quiz/`
 
 Lærer forskjellen mellom adjektiv, verb og substantiv.
 
 **Funksjoner**:
-- 200+ norske ord
+- 150+ norske ord
 - 10 spørsmål per runde
 - Poengsystem
 - Umiddelbar tilbakemelding
+- Fargekodet feedback (grønt/rødt)
 
 **Hvordan legge til nye ord**:
 ```javascript
-// I ordklasse_script.js:
-let allQuestions = [
+// I script.js:
+const allQuestions = [
     { word: "hus", type: "Substantiv" },
     { word: "løper", type: "Verb" },
     { word: "grønn", type: "Adjektiv" },
@@ -183,10 +251,23 @@ const questions = [
 
 Se `krle-quizer/README.md` for full dokumentasjon.
 
+### Naturfag
+
+#### Nervesystemet og Hormonsystemet
+**Filer**: `naturfag-quizer/hormon-nerve-system/`
+
+Quiz om samarbeidet mellom nervesystemet og hormonsystemet.
+
+**Funksjoner**:
+- 60 spørsmål fordelt på relevante temaer
+- Flervalg med forklaringer
+- Egnet for ungdomsskolen
+- Omfattende dekkning av temaet
+
 ### Interaktive Spill
 
 #### Signes Fargespill
-**Filer**: `signes-fargespill/`
+**Filer**: `interaktive-spill/signes-fargespill/`
 
 Interaktivt spill for å lære farger med talesyntese.
 
@@ -196,7 +277,7 @@ Interaktivt spill for å lære farger med talesyntese.
 - Enkelt for små barn
 - Generisk quiz-engine for gjenbruk
 
-**Les mer**: Se `signes-fargespill/README.md` for detaljert dokumentasjon om quiz-engine systemet.
+**Les mer**: Se `interaktive-spill/signes-fargespill/README.md` for detaljert dokumentasjon om quiz-engine systemet.
 
 ### Moro
 
@@ -242,17 +323,17 @@ function selectRandom(array, n) {
 
 ### Metode 1: Bruk Quiz-Engine (for interaktive spill)
 
-1. Kopier `signes-fargespill/` som mal
+1. Kopier `interaktive-spill/signes-fargespill/` som mal
 2. Definer din quiz-konfigurasjon
 3. Tilpass `generateQuestion()` og `renderOption()`
 4. Legg til i hovedsiden
 
-Se `signes-fargespill/README.md` for full guide.
+Se `interaktive-spill/signes-fargespill/README.md` for full guide.
 
 ### Metode 2: Bruk Eksisterende Quiz som Mal
 
 #### For matematikk-quiz:
-1. Kopier `gangetabell-quiz/` eller `addisjonsquiz/`
+1. Kopier en quiz fra `matematikk-quizer/` (f.eks. `gangetabell-quiz/` eller `addisjonsquiz/`)
 2. Endre spørsmålsgenerering i JS-filen
 3. Tilpass styling etter behov
 
@@ -378,7 +459,7 @@ function showFeedback() { /* ... */ }
 
 ### Vanlige oppgaver
 
-- **Legg til nye ord** i ordklasse-quiz: `ordklasse_script.js`
+- **Legg til nye ord** i ordklasse-quiz: `norsk-quizer/ordklasse-quiz/script.js`
 - **Legg til nye spørsmål** i kunnskapsquizer: Finn `questions` array
 - **Endre antall spørsmål**: Se konstanter i hver quiz-fil
 - **Tilpass tilbakemeldinger**: Se `feedbackMessages` arrays
@@ -387,10 +468,11 @@ function showFeedback() { /* ... */ }
 
 - [ ] Backend for å lagre resultater
 - [ ] Brukerkontoer og progresjonssporing
-- [ ] Flere fagområder (naturfag, engelsk, osv.)
+- [ ] Flere fagområder (engelsk, samfunnsfag)
 - [ ] Lydeffekter og bedre animasjoner
 - [ ] Adaptiv vanskelighetsgrad
 - [ ] Flerspillermodus
+- [ ] Flere klokkevarianter (digital klokke, 24-timers format)
 
 ## 🤝 Bidrag
 
@@ -406,6 +488,6 @@ For spørsmål eller forslag til forbedringer, kontakt prosjekteier.
 
 ---
 
-**Sist oppdatert**: 6. januar 2026  
-**Versjon**: 2.0  
+**Sist oppdatert**: 19. januar 2026  
+**Versjon**: 2.1  
 **Live på**: [GitHub Pages](https://sjarleee.github.io/skole-quiz/)
