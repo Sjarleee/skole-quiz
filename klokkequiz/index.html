@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Klokkequiz - Lær å lese klokka</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <a href="../index.html" class="button back-button">&larr; Tilbake til hovedsiden</a>
+        <h1>Klokkequiz</h1>
+
+        <div id="quiz-container">
+            <div id="question-counter"></div>
+            <p class="instruction">Hva er klokka? Klikk på ordene i riktig rekkefølge:</p>
+            
+            <!-- Analog klokke -->
+            <div id="clock-container">
+                <svg id="clock" viewBox="0 0 200 200" width="250" height="250">
+                    <!-- Urskive -->
+                    <circle cx="100" cy="100" r="95" fill="white" stroke="#333" stroke-width="3"/>
+                    
+                    <!-- Tall på urskiven -->
+                    <text x="100" y="35" text-anchor="middle" font-size="16" font-weight="bold">12</text>
+                    <text x="155" y="107" text-anchor="middle" font-size="16" font-weight="bold">3</text>
+                    <text x="100" y="180" text-anchor="middle" font-size="16" font-weight="bold">6</text>
+                    <text x="45" y="107" text-anchor="middle" font-size="16" font-weight="bold">9</text>
+                    
+                    <!-- Minuttstreker -->
+                    <g id="minute-marks"></g>
+                    
+                    <!-- Timeviser -->
+                    <line id="hour-hand" x1="100" y1="100" x2="100" y2="60" 
+                          stroke="#333" stroke-width="6" stroke-linecap="round"/>
+                    
+                    <!-- Minuttviser -->
+                    <line id="minute-hand" x1="100" y1="100" x2="100" y2="40" 
+                          stroke="#e74c3c" stroke-width="4" stroke-linecap="round"/>
+                    
+                    <!-- Senterpunkt -->
+                    <circle cx="100" cy="100" r="5" fill="#333"/>
+                </svg>
+            </div>
+
+            <!-- Valgte ord -->
+            <div id="selected-words" class="word-display">
+                <span class="placeholder">Velg ord...</span>
+            </div>
+
+            <!-- Tilgjengelige ord -->
+            <div id="word-options" class="word-grid">
+                <!-- Genereres av JavaScript -->
+            </div>
+
+            <div id="feedback"></div>
+            
+            <div class="button-row">
+                <button id="clear-btn" class="button secondary-btn">Tøm</button>
+                <button id="check-btn" class="button primary-btn">Sjekk svar</button>
+            </div>
+            
+            <button id="next-btn" style="display:none;">Neste Spørsmål</button>
+        </div>
+
+        <div id="score-container" style="display:none;">
+            <!-- Resultater vises her -->
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
