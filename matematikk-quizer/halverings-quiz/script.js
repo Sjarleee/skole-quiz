@@ -190,11 +190,21 @@ document.addEventListener('DOMContentLoaded', () => {
     function selectAnswer(selectedOption, correctAnswer) {
         enableOptionButtons(false);
         if (selectedOption === correctAnswer) {
-            feedbackElement.textContent = '✓ Riktig!';
+            feedbackElement.innerHTML = '<span class="feedback-icon">✓</span> Riktig!';
             feedbackElement.className = 'feedback correct';
             score++;
         } else {
-            feedbackElement.textContent = `✗ Feil. Riktig svar var ${correctAnswer}.`;
+            // Finn det opprinnelige tallet
+            const originalNumber = correctAnswer * 2;
+            
+            // Lag en visuell forklaring som viser oppdeling
+            const explanation = `Del ${originalNumber} i to like deler:<br>${correctAnswer} + ${correctAnswer} = ${originalNumber}`;
+            
+            feedbackElement.innerHTML = `
+                <div class="feedback-icon">✗</div>
+                <div class="feedback-answer">Riktig svar: ${correctAnswer}</div>
+                <div class="feedback-explanation">${explanation}</div>
+            `;
             feedbackElement.className = 'feedback incorrect';
         }
         nextButton.style.display = 'block';
